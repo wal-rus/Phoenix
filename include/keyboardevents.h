@@ -36,10 +36,10 @@ namespace std
 
 class KeyboardKeyEvent : public InputDeviceEventHelper<InputDeviceButtonEvent, KeyboardKeyEvent, QtKeyboardKeyEvent>
 {
-    using super = HelperType;
-
 public:
-    using super::super;
+    //MSVC Does not support constructor inheritance because reasons.
+    KeyboardKeyEvent() {}
+    KeyboardKeyEvent(EventType&& event) : InputDeviceEventHelper(std::forward<EventType>(event)) {}
 
     static KeyboardKeyEvent fromKeyEvent(const QKeyEvent *event)
     {

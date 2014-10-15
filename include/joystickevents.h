@@ -49,13 +49,13 @@ class ControllerButtonEvent : public InputDeviceEventHelper<InputDeviceButtonEve
                                                             ControllerButtonEvent,
                                                             SDL_GameControllerButton>
 {
-    using super = HelperType;
-
 public:
-    using super::super;
+    ControllerButtonEvent() {}
+    ControllerButtonEvent(EventType&& button) : HelperType(std::forward<EventType>(button)) {}
+
     static ControllerButtonEvent fromSDLEvent(const SDL_ControllerButtonEvent &event)
     {
-        return ControllerButtonEvent(static_cast<SDL_GameControllerButton>(event.button));
+        return ControllerButtonEvent(std::move(static_cast<SDL_GameControllerButton>(event.button)));
     }
 
     static ControllerButtonEvent fromString(const QString &str)
@@ -63,7 +63,7 @@ public:
         QByteArray evname = str.toLatin1();
         auto btn = SDL_GameControllerGetButtonFromString(evname.constData());
         if (btn != SDL_CONTROLLER_BUTTON_INVALID)
-            return ControllerButtonEvent(btn);
+            return ControllerButtonEvent(std::move(btn));
 
         return ControllerButtonEvent();
     }
@@ -84,13 +84,13 @@ struct TEvent_default_t<SDL_GameControllerAxis>
 
 class ControllerAxisEvent : public InputDeviceEventHelper<InputDeviceAnalogEvent, ControllerAxisEvent, SDL_GameControllerAxis>
 {
-    using super = HelperType;
-
 public:
-    using super::super;
+    ControllerAxisEvent() : HelperType() {}
+    ControllerAxisEvent(SDL_GameControllerAxis&& button) : HelperType(button) {}
+
     static ControllerAxisEvent fromSDLEvent(const SDL_ControllerAxisEvent &event)
     {
-        return ControllerAxisEvent(static_cast<SDL_GameControllerAxis>(event.axis));
+        return ControllerAxisEvent(std::move(static_cast<SDL_GameControllerAxis>(event.axis)));
     }
 
     static ControllerAxisEvent fromString(const QString &str)
@@ -98,7 +98,7 @@ public:
         QByteArray evname = str.toLatin1();
         auto axis = SDL_GameControllerGetAxisFromString(evname.constData());
         if (axis != SDL_CONTROLLER_AXIS_INVALID)
-            return ControllerAxisEvent(axis);
+            return ControllerAxisEvent(std::move(axis));
 
         return ControllerAxisEvent();
     }

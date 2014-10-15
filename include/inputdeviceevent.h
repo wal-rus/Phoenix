@@ -63,16 +63,15 @@ namespace std
 class InputDeviceButtonEvent : public InputDeviceEvent
 {
 protected:
-    using InputDeviceEvent::InputDeviceEvent;
+    InputDeviceButtonEvent(int _type = 0) : InputDeviceEvent(_type) {}
 };
 
 // specialization for Analog events (joystick axis...)
 class InputDeviceAnalogEvent : public InputDeviceEvent
 {
 protected:
-    using InputDeviceEvent::InputDeviceEvent;
+    InputDeviceAnalogEvent(int _type = 0) : InputDeviceEvent(_type) {}
 };
-
 
 // hackish way to generate unique id for types
 // http://codereview.stackexchange.com/questions/44936/unique-type-id-in-c/45079#45079
@@ -174,6 +173,7 @@ protected:
     // typedef our own type here so derived class can refer to it easily
     // without having to type the whole templated class name again
     using HelperType = InputDeviceEventHelper<TBase, T, TEvent>;
+    using EventType = TEvent;
 
 private:
     TEvent m_event;
