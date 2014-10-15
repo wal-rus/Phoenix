@@ -14,7 +14,24 @@ const QStringList EXPRESSIONS = (QStringList() << " "
                                                << "?"
                                                << ":");
 
-TheGamesDB::TheGamesDB()
+TheGamesDB::TheGamesDB() :
+PlatformsMap(QMap<QString,QString>{
+  { "Atari Lynx", "Atari Lynx" },
+  { "DOS", "DOS" },
+  { "Game Boy Advance", "Nintendo Game Boy Advance" },
+  { "Nintendo", "Nintendo Entertainment System (NES)" },
+  { "Super Nintendo", "Super Nintendo (SNES)" },
+  { "Game Boy", "Nintendo Game Boy" },
+  { "Nintendo DS", "Nintendo DS" },
+  { "Sega Master System", "Sega Master System" },
+  { "Sega Mega Drive", "Sega Mega Drive" },
+  { "Sega Game Gear", "Sega Game Gear" },
+  { "Sega CD", "Sega CD" },
+  { "Sega 32X", "Sega 32X" },
+  { "Sony PlayStation", "Sony Playstation" },
+  { "Arcade", "Arcade" },
+  { "Film", "Film" }
+  })
 {
     manager = new QNetworkAccessManager(this);
 
